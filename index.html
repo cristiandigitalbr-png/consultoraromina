@@ -720,11 +720,10 @@
       document.removeEventListener('click', tryAutoplayBg);
       document.removeEventListener('touchstart', tryAutoplayBg);
     }).catch((err) => {
-      logDebug('❌ bloqueado: ' + err.message + ' (tocá la pantalla de nuevo)');
+      logDebug('❌ bloqueado: ' + err.message + ' (tocá un botón o texto, no solo deslices)');
     });
   }
   document.addEventListener('click', tryAutoplayBg);
-  document.addEventListener('touchstart', tryAutoplayBg);
 
 </script>
 
