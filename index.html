@@ -93,7 +93,7 @@
       font-family: var(--font-sans);
       font-size: 0.7rem; font-weight: 700;
       letter-spacing: 3px; text-transform: uppercase;
-      color: var(--terracota); margin-bottom: 12px;
+      color: var(--gold); margin-bottom: 12px;
       display: block;
     }
 
@@ -138,7 +138,7 @@
     }
     .hero-subtitle-accent {
       font-family: var(--font-sans);
-      font-size: 0.9rem; color: var(--terracota);
+      font-size: 0.9rem; color: var(--gold);
       letter-spacing: 1px; margin-bottom: 4px;
       position: relative; z-index: 1;
     }
@@ -231,7 +231,7 @@
       color: var(--brown); margin-top: 24px;
     }
     .firma-titulo {
-      font-size: 0.82rem; color: var(--terracota);
+      font-size: 0.82rem; color: var(--gold);
       text-transform: uppercase; letter-spacing: 2px;
       margin-top: 4px;
     }
@@ -289,7 +289,7 @@
     .consulta-card h3 {
       font-family: var(--font-serif);
       font-size: 1.7rem; font-weight: 400;
-      color: var(--terracota); margin-bottom: 8px;
+      color: var(--gold); margin-bottom: 8px;
     }
     .consulta-precio {
       font-family: var(--font-serif);
@@ -698,22 +698,85 @@
     <p>Una composición original que honra el mensaje sagrado de nuestros síntomas. Escúchala y permite que resuene en tu ser.</p>
     <div class="player">
       <div class="player-title">Himno al Síntoma — Romi Ronconi</div>
+      <audio id="himnoAudio" src="audio/himno-al-sintoma.mp3" preload="metadata"></audio>
       <div class="player-controls">
-        <button class="play-btn">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">
+          <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         </button>
         <div class="player-track">
-          <div class="track-bar"><div class="track-fill" style="width:0%"></div></div>
-          <div class="track-times"><span>0:00</span><span>1:40</span></div>
+          <div class="track-bar" id="trackBar" onclick="seekTrack(event)"><div class="track-fill" id="trackFill" style="width:0%"></div></div>
+          <div class="track-times"><span id="currentTime">0:00</span><span id="duration">0:00</span></div>
         </div>
       </div>
       <div class="volume-row">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
-        <div class="volume-bar"><div class="volume-fill"></div></div>
+        <div class="volume-bar" id="volumeBar" onclick="setVolume(event)"><div class="volume-fill" id="volumeFill"></div></div>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  const himnoAudio = document.getElementById('himnoAudio');
+  const playBtn = document.getElementById('playBtn');
+  const playIcon = document.getElementById('playIcon');
+  const trackFill = document.getElementById('trackFill');
+  const trackBar = document.getElementById('trackBar');
+  const currentTimeEl = document.getElementById('currentTime');
+  const durationEl = document.getElementById('duration');
+  const volumeFill = document.getElementById('volumeFill');
+  const volumeBar = document.getElementById('volumeBar');
+
+  himnoAudio.volume = 0.7;
+  volumeFill.style.width = '70%';
+
+  function formatTime(t) {
+    if (isNaN(t)) return '0:00';
+    const m = Math.floor(t / 60);
+    const s = Math.floor(t % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function togglePlay() {
+    if (himnoAudio.paused) {
+      himnoAudio.play();
+      playIcon.innerHTML = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+    } else {
+      himnoAudio.pause();
+      playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    }
+  }
+
+  himnoAudio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = formatTime(himnoAudio.duration);
+  });
+
+  himnoAudio.addEventListener('timeupdate', () => {
+    const pct = (himnoAudio.currentTime / himnoAudio.duration) * 100 || 0;
+    trackFill.style.width = pct + '%';
+    currentTimeEl.textContent = formatTime(himnoAudio.currentTime);
+  });
+
+  himnoAudio.addEventListener('ended', () => {
+    playIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    trackFill.style.width = '0%';
+  });
+
+  function seekTrack(e) {
+    const rect = trackBar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    if (!isNaN(himnoAudio.duration)) {
+      himnoAudio.currentTime = pct * himnoAudio.duration;
+    }
+  }
+
+  function setVolume(e) {
+    const rect = volumeBar.getBoundingClientRect();
+    const pct = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+    himnoAudio.volume = pct;
+    volumeFill.style.width = (pct * 100) + '%';
+  }
+</script>
 
 <section id="testimonios" style="padding:50px 6vw;background:var(--cream);text-align:center;">
   <span class="section-tag">Experiencias</span>
