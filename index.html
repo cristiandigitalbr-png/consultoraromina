@@ -710,25 +710,22 @@
     logDebug('❌ ERROR código ' + (err ? err.code : '?') + ' — el archivo no carga (revisar nombre/ruta)');
   });
 
-  // Reproducir música de fondo automáticamente en el primer gesto del usuario
-  // (los navegadores bloquean el autoplay con sonido sin interacción previa)
-  let autoplayAttempted = false;
+  // Reproducir música de fondo automáticamente en el primer toque/click válido
+  // (scroll NO cuenta como interacción válida para el navegador, por eso no se usa)
   function tryAutoplayBg() {
-    if (autoplayAttempted) return;
-    autoplayAttempted = true;
+    if (!bgMusic.paused) return;
     logDebug('intentando reproducir...');
     bgMusic.play().then(() => {
       logDebug('▶️ sonando');
+      document.removeEventListener('click', tryAutoplayBg);
+      document.removeEventListener('touchstart', tryAutoplayBg);
     }).catch((err) => {
-      logDebug('❌ bloqueado por el navegador: ' + err.message);
+      logDebug('❌ bloqueado: ' + err.message + ' (tocá la pantalla de nuevo)');
     });
-    document.removeEventListener('click', tryAutoplayBg);
-    document.removeEventListener('touchstart', tryAutoplayBg);
-    document.removeEventListener('scroll', tryAutoplayBg);
   }
-  document.addEventListener('click', tryAutoplayBg, { once: true });
-  document.addEventListener('touchstart', tryAutoplayBg, { once: true });
-  document.addEventListener('scroll', tryAutoplayBg, { once: true });
+  document.addEventListener('click', tryAutoplayBg);
+  document.addEventListener('touchstart', tryAutoplayBg);
+
 </script>
 
 <section id="testimonios" style="padding:50px 6vw;background:var(--cream);text-align:center;">
