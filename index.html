@@ -691,9 +691,24 @@
 
 <audio id="bgMusic" src="himno-al-sintoma.mp3" loop preload="auto" controlsList="nodownload noremoteplayback" oncontextmenu="return false;" disableRemotePlayback style="display:none;"></audio>
 
+<div id="audioDebug" style="position:fixed;bottom:10px;left:10px;right:10px;z-index:9999;background:#1a1208;color:#f5ede4;font-family:sans-serif;font-size:12px;padding:10px 14px;border-radius:10px;opacity:0.95;">Audio: iniciando...</div>
+
 <script>
   const bgMusic = document.getElementById('bgMusic');
+  const audioDebug = document.getElementById('audioDebug');
   bgMusic.volume = 0.5;
+
+  function logDebug(msg) {
+    audioDebug.textContent = 'Audio: ' + msg;
+  }
+
+  bgMusic.addEventListener('loadstart', () => logDebug('cargando archivo...'));
+  bgMusic.addEventListener('canplay', () => logDebug('listo para reproducir (esperando toque)'));
+  bgMusic.addEventListener('playing', () => logDebug('▶️ sonando'));
+  bgMusic.addEventListener('error', () => {
+    const err = bgMusic.error;
+    logDebug('❌ ERROR código ' + (err ? err.code : '?') + ' — el archivo no carga (revisar nombre/ruta)');
+  });
 
   // Reproducir música de fondo automáticamente en el primer gesto del usuario
   // (los navegadores bloquean el autoplay con sonido sin interacción previa)
@@ -701,8 +716,11 @@
   function tryAutoplayBg() {
     if (autoplayAttempted) return;
     autoplayAttempted = true;
-    bgMusic.play().catch(() => {
-      // si el navegador lo bloquea igual, no rompe nada
+    logDebug('intentando reproducir...');
+    bgMusic.play().then(() => {
+      logDebug('▶️ sonando');
+    }).catch((err) => {
+      logDebug('❌ bloqueado por el navegador: ' + err.message);
     });
     document.removeEventListener('click', tryAutoplayBg);
     document.removeEventListener('touchstart', tryAutoplayBg);
