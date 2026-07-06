@@ -617,9 +617,9 @@
     "Tu cuerpo insiste en recordarte una historia que oculta una emoción dolorosa.<br>
     Por eso tu síntoma es un mensaje y escucharlo es el primer paso hacia la sanación."
   </p>
-  <a href="#agenda" class="btn-primary reveal">
+  <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="btn-primary reveal">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
-    Agenda tu consulta
+    Agenda tu primera consulta
   </a>
 </section>
 
@@ -647,7 +647,7 @@
   <span class="section-tag" style="color:var(--gold-light);">Comenzá hoy</span>
   <h2>Descubre la Decodificación<br>Bioemocional</h2>
   <p>Inicia tu camino de transformación personal. Agenda una consulta y comienza a escuchar el mensaje de tu cuerpo.</p>
-  <a href="#agenda" class="btn-primary">Agenda tu consulta</a>
+  <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="btn-primary">Agenda tu primera consulta</a>
 </section>
 
 <section id="consultas">
@@ -659,7 +659,7 @@
   <div class="consultas-grid">
     <div class="consulta-card">
       <h3>Síntomas Generales</h3>
-      <div class="consulta-precio">60 USD</div>
+      <div class="consulta-precio">110 USD</div>
       <div class="consulta-divider"></div>
       <p class="consulta-desc">Consulta enfocada en síntomas físicos, emocionales y relacionales. Ideal para explorar el mensaje de tu cuerpo.</p>
       <ul class="consulta-list">
@@ -669,11 +669,11 @@
         <li>Guía de acciones simbólicas</li>
         <li>Seguimiento y Consulta en Formato Certificado</li>
       </ul>
-      <a href="https://cristiandigitalbr-png.github.io/consultoraromina/#agenda" class="consulta-btn">Reservar sesión</a>
+      <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="consulta-btn">Reservar sesión</a>
     </div>
     <div class="consulta-card">
       <h3>Economía y Empresas</h3>
-      <div class="consulta-precio">60 USD</div>
+      <div class="consulta-precio">110 USD</div>
       <div class="consulta-divider"></div>
       <p class="consulta-desc">Consulta especializada en síntomas que afectan tu economía, trabajo o emprendimiento.</p>
       <ul class="consulta-list">
@@ -684,43 +684,25 @@
         <li>Plan de acción personalizado</li>
         <li>Seguimiento y Consulta en Formato Certificado</li>
       </ul>
-      <a href="https://cristiandigitalbr-png.github.io/consultoraromina/#agenda" class="consulta-btn">Reservar sesión</a>
+      <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="consulta-btn">Reservar sesión</a>
     </div>
   </div>
 </section>
 
 <audio id="bgMusic" src="himno-al-sintoma.mp3" loop preload="auto" controlsList="nodownload noremoteplayback" oncontextmenu="return false;" disableRemotePlayback style="display:none;"></audio>
 
-<div id="audioDebug" style="position:fixed;bottom:10px;left:10px;right:10px;z-index:9999;background:#1a1208;color:#f5ede4;font-family:sans-serif;font-size:12px;padding:10px 14px;border-radius:10px;opacity:0.95;">Audio: iniciando...</div>
-
 <script>
   const bgMusic = document.getElementById('bgMusic');
-  const audioDebug = document.getElementById('audioDebug');
   bgMusic.volume = 0.5;
-
-  function logDebug(msg) {
-    audioDebug.textContent = 'Audio: ' + msg;
-  }
-
-  bgMusic.addEventListener('loadstart', () => logDebug('cargando archivo...'));
-  bgMusic.addEventListener('canplay', () => logDebug('listo para reproducir (esperando toque)'));
-  bgMusic.addEventListener('playing', () => logDebug('▶️ sonando'));
-  bgMusic.addEventListener('error', () => {
-    const err = bgMusic.error;
-    logDebug('❌ ERROR código ' + (err ? err.code : '?') + ' — el archivo no carga (revisar nombre/ruta)');
-  });
 
   // Reproducir música de fondo automáticamente en el primer toque/click válido
   // (scroll NO cuenta como interacción válida para el navegador, por eso no se usa)
   function tryAutoplayBg() {
     if (!bgMusic.paused) return;
-    logDebug('intentando reproducir...');
     bgMusic.play().then(() => {
-      logDebug('▶️ sonando');
       document.removeEventListener('click', tryAutoplayBg);
-      document.removeEventListener('touchstart', tryAutoplayBg);
-    }).catch((err) => {
-      logDebug('❌ bloqueado: ' + err.message + ' (tocá un botón o texto, no solo deslices)');
+    }).catch(() => {
+      // si el navegador lo bloquea igual, reintenta en el próximo click
     });
   }
   document.addEventListener('click', tryAutoplayBg);
@@ -789,7 +771,7 @@
     </div>
     <div class="cal-footer">
       <p>Selecciona una fecha disponible para continuar</p>
-      <a href="https://cristiandigitalbr-png.github.io/consultoraromina/#" class="btn-primary">Consultar disponibilidad</a>
+      <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="btn-primary">Consultar disponibilidad</a>
     </div>
   </div>
 </section>
