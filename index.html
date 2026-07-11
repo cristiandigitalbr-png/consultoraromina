@@ -218,7 +218,17 @@
       font-family: var(--font-serif); font-style: italic;
       font-size: 0.9rem; line-height: 1.4;
       box-shadow: 0 8px 24px rgba(47,95,120,0.3);
+      cursor: pointer; user-select: none;
+      display: flex; align-items: center; gap: 10px;
+      transition: transform 0.2s;
     }
+    .foto-badge:hover { transform: scale(1.04); }
+    .foto-badge .play-icon {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .foto-badge .play-icon svg { width: 11px; height: 11px; }
 
     .sobre-mi-texto h2 {
       font-family: var(--font-serif);
@@ -633,7 +643,10 @@
   <div class="sobre-mi-inner">
     <div class="sobre-mi-foto reveal">
       <div class="foto-frame"><img src="romina-foto.png" alt="Romina Ronconi" style="width:100%;height:100%;object-fit:cover;"></div>
-      <div class="foto-badge">Bioexistencia<br>Consciente</div>
+      <div class="foto-badge" id="musicBadge">
+        <span class="play-icon" id="playIcon"><svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
+        <span>Himno al<br>Síntoma</span>
+      </div>
     </div>
     <div class="sobre-mi-texto reveal" style="text-align:center;">
       <span class="section-tag">Sobre mí</span>
@@ -745,17 +758,33 @@
   const bgMusic = document.getElementById('bgMusic');
   bgMusic.volume = 0.5;
 
+  const playIcon = document.getElementById('playIcon');
+  const iconPlay = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>';
+  const iconPause = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+  function syncIcon(){ playIcon.innerHTML = bgMusic.paused ? iconPlay : iconPause; }
+
   // Reproducir música de fondo automáticamente en el primer toque/click válido
   // (scroll NO cuenta como interacción válida para el navegador, por eso no se usa)
   function tryAutoplayBg() {
     if (!bgMusic.paused) return;
     bgMusic.play().then(() => {
+      syncIcon();
       document.removeEventListener('click', tryAutoplayBg);
     }).catch(() => {
       // si el navegador lo bloquea igual, reintenta en el próximo click
     });
   }
   document.addEventListener('click', tryAutoplayBg);
+
+  const musicBadge = document.getElementById('musicBadge');
+  musicBadge.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (bgMusic.paused) { bgMusic.play().catch(()=>{}); } else { bgMusic.pause(); }
+    document.removeEventListener('click', tryAutoplayBg);
+    syncIcon();
+  });
+  bgMusic.addEventListener('play', syncIcon);
+  bgMusic.addEventListener('pause', syncIcon);
 
 </script>
 
