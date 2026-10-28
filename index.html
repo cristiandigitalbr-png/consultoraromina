@@ -218,7 +218,9 @@
       font-family: var(--font-serif); font-style: italic;
       font-size: 0.9rem; line-height: 1.4;
       box-shadow: 0 8px 24px rgba(47,95,120,0.3);
-      cursor: pointer; user-select: none;
+      cursor: pointer; user-select: none; -webkit-user-select: none;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      z-index: 5;
       display: flex; align-items: center; gap: 10px;
       transition: transform 0.2s;
     }
@@ -229,6 +231,7 @@
       display: flex; align-items: center; justify-content: center;
     }
     .foto-badge .play-icon svg { width: 11px; height: 11px; }
+    .foto-badge * { pointer-events: none; }
 
     .sobre-mi-texto h2 {
       font-family: var(--font-serif);
@@ -796,7 +799,8 @@
 <section id="cta-banner">
   <span class="section-tag" style="color:var(--gold-light);">Comenzá hoy</span>
   <h2>Descubre la Decodificación<br>Bioemocional</h2>
-  <p>Inicia tu camino de transformación personal. Agenda una consulta y comienza a escuchar el mensaje de tu síntoma.<br>Descubre la experiencia ReoriXins.</p>
+  <p>Inicia tu camino de transformación personal. Agenda una consulta y comienza a escuchar el mensaje de tu síntoma.</p>
+  <h2 style="margin-bottom:36px;">Experiencia ReoriXins</h2>
   <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="btn-primary">Agenda una entrevista</a>
 </section>
 
