@@ -641,6 +641,7 @@
       .foto-badge:hover { transform: translateX(50%) scale(1.04); }
     }
       .cert-wide { justify-content: center; }
+      #entrevistas { scroll-margin-top: 110px; }
   </style>
 </head>
 <body>
@@ -655,7 +656,8 @@
   </div>
   <ul class="nav-links">
     <li><a href="#sobre-mi">Sobre mí</a></li>
-    <li><a href="#consultas">Entrevistas</a></li>
+    <li><a href="#entrevistas">Entrevistas</a></li>
+    <li><a href="#consultas">Consultas</a></li>
     <li><a href="#agenda">Agenda</a></li>
   </ul>
   <div class="nav-hamburger" onclick="toggleMenu()">
@@ -666,7 +668,8 @@
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-close" onclick="toggleMenu()">✕</button>
   <a href="#sobre-mi" onclick="toggleMenu()">Sobre mí</a>
-  <a href="#consultas" onclick="toggleMenu()">Entrevistas</a>
+  <a href="#entrevistas" onclick="toggleMenu()">Entrevistas</a>
+  <a href="#consultas" onclick="toggleMenu()">Consultas</a>
   <a href="#agenda" onclick="toggleMenu()">Agenda</a>
 </div>
 
@@ -831,7 +834,7 @@
       <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="consulta-btn">Reservar sesión</a>
     </div>
   </div>
-  <div class="entrevista-box">
+  <div class="entrevista-box" id="entrevistas">
     <svg class="entrevista-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M24 6c3 6 3 12 0 18-3-6-3-12 0-18z"/>
       <path d="M24 24c5-4 11-5 16-3-3 5-9 7-16 3z"/>
