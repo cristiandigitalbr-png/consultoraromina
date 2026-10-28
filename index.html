@@ -796,7 +796,7 @@
 <section id="cta-banner">
   <span class="section-tag" style="color:var(--gold-light);">Comenzá hoy</span>
   <h2>Descubre la Decodificación<br>Bioemocional</h2>
-  <p>Inicia tu camino de transformación personal. Agenda una consulta y comienza a escuchar el mensaje de tu síntoma.</p>
+  <p>Inicia tu camino de transformación personal. Agenda una consulta y comienza a escuchar el mensaje de tu síntoma.<br>Descubre la experiencia ReoriXins.</p>
   <a href="https://wa.me/5493446226244?text=Hola%20Romina%2C%20me%20gustaria%20recibir%20mas%20informacion%20sobre%20consultas%20de%20Bioexistencia%20Consciente..." target="_blank" rel="noopener" class="btn-primary">Agenda una entrevista</a>
 </section>
 
@@ -853,20 +853,53 @@
 
 <script>
   const bgMusic = document.getElementById('bgMusic');
+  const musicBadge = document.getElementById('musicBadge');
+  const playIcon = document.getElementById('playIcon');
   bgMusic.volume = 0.5;
+  let userPaused = false;
+
+  const ICON_PLAY  = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg>';
+  const ICON_PAUSE = '<svg viewBox="0 0 24 24" fill="#fff"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>';
+
+  function updateIcon() {
+    const playing = !bgMusic.paused;
+    playIcon.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
+    musicBadge.setAttribute('aria-label', playing ? 'Pausar Himno al Síntoma' : 'Reproducir Himno al Síntoma');
+    musicBadge.classList.toggle('is-playing', playing);
+  }
+  bgMusic.addEventListener('play', updateIcon);
+  bgMusic.addEventListener('pause', updateIcon);
+
+  // Botón del Himno: reproducir / pausar
+  musicBadge.setAttribute('role', 'button');
+  musicBadge.setAttribute('tabindex', '0');
+  musicBadge.style.cursor = 'pointer';
+  function toggleMusic(e) {
+    e.stopPropagation();
+    if (bgMusic.paused) {
+      userPaused = false;
+      bgMusic.play().catch(() => {});
+    } else {
+      userPaused = true;
+      bgMusic.pause();
+    }
+    document.removeEventListener('click', tryAutoplayBg);
+  }
+  musicBadge.addEventListener('click', toggleMusic);
+  musicBadge.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMusic(e); }
+  });
 
   // Reproducir música de fondo automáticamente en el primer toque/click válido
-  // (scroll NO cuenta como interacción válida para el navegador, por eso no se usa)
+  // (no se reactiva si la persona la pausó con el botón)
   function tryAutoplayBg() {
-    if (!bgMusic.paused) return;
+    if (userPaused || !bgMusic.paused) return;
     bgMusic.play().then(() => {
       document.removeEventListener('click', tryAutoplayBg);
-    }).catch(() => {
-      // si el navegador lo bloquea igual, reintenta en el próximo click
-    });
+    }).catch(() => {});
   }
   document.addEventListener('click', tryAutoplayBg);
-
+  updateIcon();
 </script>
 
 <section id="agenda">
